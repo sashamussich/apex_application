@@ -1,0 +1,9 @@
+#block-text.block
+  .content
+    %h2.title= @org_name
+    %h2.title Welcome, #{@member.name}
+    .inner
+      %p.first
+        New company/organization wellcome page.
+        First page :)))
+- content_for :sidebar, render(:partial => 'sidebar')

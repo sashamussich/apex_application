@@ -1,0 +1,38 @@
+%h1= @org_name
+.block
+ %h2 Welcome  #{@member.name}, please fill in personal data
+ .content.login
+  .flash
+   - flash.each do |type, message|
+    %div{ :class => "message #{type}" }
+     %p= message
+   - flash.clear  # clear contents so we won't see it again
+
+  = form_for(@member, :html => { :class => "form login" }) do |f|
+   - unless @member.errors.empty? && @user.errors.empty?
+    #errorExplanation.group
+     %ul
+      = @member.errors.full_messages.uniq.inject(''){|str, msg| str << "<li> #{msg}"}.html_safe
+      = @user.errors.full_messages.uniq.inject(''){|str, msg| str << "<li> #{msg}"}.html_safe
+
+   .group
+    = f.label :cpf, :class => "label "
+    = f.text_field :cpf, :class => "text_field"
+    %span.description unique ID 
+
+   .group
+    = f.label :phone, :class => "label "
+    = f.text_field :phone, :class => "text_field"
+
+   .group
+    = f.label :address, :class => "label "
+    = f.text_field :address, :class => "text_field"
+
+   .group
+    = f.label :included, :class => "label "
+    = f.text_field :included, :class => "text_field"
+    %span.description incuded in accident?
+     
+   .group.navform.wat-cf
+    %button.button{ :type => "submit" }
+     Save your data
