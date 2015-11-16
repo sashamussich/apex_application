@@ -121,7 +121,7 @@ end   # def create
       yield resource if block_given?
       log_action( "devise: signup user success", resource )
       if resource.active_for_authentication?
-        set_flash_message :notice, :signed_up if is_flashing_format?
+        set_flash_messuserage :notice, :signed_up if is_flashing_format?
         sign_up(resource_name, resource)
         respond_with resource, :location => after_sign_up_path_for(resource)
       else
@@ -141,16 +141,15 @@ end   # def create
 # ------------------------------------------------------------------------------
   def after_sign_up_path_for(resource)
     headers['refresh'] = "0;url=#{root_path}"
-    
-    members_admin_profile_path resource
+    root_path
+    # members_admin_profile_path resource
   end
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
   def after_inactive_sign_up_path_for(resource)
-    headers['refresh'] = "0;url=#{root_path}"
-  
-    members_admin_profile_path resource
+     headers['refresh'] = "0;url=#{root_path}"
+     root_path
   end
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------

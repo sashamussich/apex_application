@@ -3,13 +3,13 @@ class MembersController < ApplicationController
   # uncomment to ensure common layout for forms
   layout  "sign", :only => [:new, :edit, :create]
 
-  def new()
-    @member = Member.new()
-    @user   = User.new()
+  def new
+    @member = Member.new
+    @user   = User.new
   end
 
-  def create()
-    @user   = User.new( user_params )
+  def create
+    @user   = User.new(user_params)
     # ok to create user, member
     if @user.save_and_invite_member() && @user.create_member( member_params )
       flash[:notice] = "New member added and invitation email sent to #{@user.email}."
@@ -36,19 +36,21 @@ class MembersController < ApplicationController
   end 
 
   def admin_profile
+    @member = Member.new
+    @user = current_user
   end 
 
   private
 
-  def personal_data_params()
+  def personal_data_params
     params.require(:member).permit(:cpf, :phone, :address, :included, :id)
   end
 
-  def member_params()
+  def member_params
     params.require(:member).permit(:name, :function)
   end
 
-  def user_params()
+  def user_params
     params.require(:user).permit(:email, :password, :password_confirmation)
   end
 

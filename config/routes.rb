@@ -18,6 +18,6 @@ Rails.application.routes.draw do
   }
 
   resources :members do
-    get '/admin_profile', on: :member
+    get '/admin_profile' => 'members#admin_profile', on: :member
   end
 end

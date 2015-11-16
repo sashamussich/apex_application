@@ -36,16 +36,15 @@
   # GET /resource/confirmation?confirmation_token=abcdef
   # entered on new sign-ups and invite-members
   def show
-    if @confirmable.new_record?  ||
-       !::Milia.use_invite_member || 
-       @confirmable.skip_confirm_change_password 
+    if @confirmable.new_record?  || !::Milia.use_invite_member || @confirmable.skip_confirm_change_password 
 
-      sign_in_tenanted_and_redirect if !@confirmable.member.nil?
-
-      log_action( "devise pass-thru" )
-      super  # this will redirect 
-      if @confirmable.skip_confirm_change_password
-        sign_in_tenanted(resource)
+      if @confirmable.member.nil?
+        log_action( "admin sign up" )
+        sign_up_admin_member @confirmable
+      else
+        log_action( "devise pass-thru" )
+        super  # this will redirect 
+        sign_in_tenanted(resource) if @confirmable.skip_confirm_change_password 
       end
     else
       log_action( "password set form" )
@@ -95,7 +94,7 @@
       end
 
       def sign_up_admin_member resource
-        redirect_to members_admin_profile_path resource
+        redirect_to admin_profile_member_path resource
       end
 
   end  # class
