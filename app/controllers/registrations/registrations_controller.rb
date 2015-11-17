@@ -1,4 +1,4 @@
-  class Registrations::RegistrationsController < Devise::RegistrationsController
+class Registrations::RegistrationsController < Devise::RegistrationsController
 
   skip_before_action :authenticate_tenant!, :only => [:new, :create, :cancel]
 
@@ -30,26 +30,21 @@ def create
       if @tenant.errors.empty?   # tenant created
         
         initiate_tenant( @tenant )    # first time stuff for new tenant
-
         devise_create( user_params )   # devise resource(user) creation; sets resource
 
         if resource.errors.empty?   #  SUCCESS!
-
           log_action( "signup user/tenant success", resource )
             # do any needed tenant initial setup
           Tenant.tenant_signup(resource, @tenant, coupon_params)
-
         else  # user creation failed; force tenant rollback
           log_action( "signup user create failed", resource )
           raise ActiveRecord::Rollback   # force the tenant transaction to be rolled back  
         end  # if..then..else for valid user creation
-
       else
         resource.valid?
         log_action( "tenant create failed", @tenant )
         render :new
       end # if .. then .. else no tenant errors
-
     end  #  wrap tenant/user creation in a transaction
         
   else
@@ -60,7 +55,6 @@ def create
     log_action( "recaptcha failed", resource )
     render :new
   end
-
 end   # def create
 
 # ------------------------------------------------------------------------------
@@ -108,7 +102,6 @@ end   # def create
     # same as in devise gem EXCEPT need to prep signup form variables
 # ------------------------------------------------------------------------------
   def devise_create( user_params )
-
     build_resource(user_params)
    
       # if we're using milia's invite_member helpers
@@ -166,5 +159,4 @@ end   # def create
  
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-
-  end   # class Registrations
+end   # class Registrations

@@ -9,7 +9,7 @@
       - flash.clear  # clear contents so we won't see it again
 
     = form_for(@member, :html => { :class => "form login" }) do |f|
-      - if @member.errors && @user.errors
+      - unless @member.errors.empty? && @user.errors.empty?
         #errorExplanation.group
           %ul
             = @member.errors.full_messages.uniq.inject(''){|str, msg| str << "<li> #{msg}"}.html_safe

@@ -37,9 +37,10 @@
   # entered on new sign-ups and invite-members
   def show
     if @confirmable.new_record?  || !::Milia.use_invite_member || @confirmable.skip_confirm_change_password 
-
-      if @confirmable.member.nil?
+# binding.pry
+      if  @confirmable.member.nil? || @confirmable.member.admin?
         log_action( "admin sign up" )
+        @confirmable.confirm!
         sign_up_admin_member @confirmable
       else
         log_action( "devise pass-thru" )
@@ -94,7 +95,9 @@
       end
 
       def sign_up_admin_member resource
-        redirect_to admin_profile_member_path resource
+        # Tenant.set_current_tenant resource.member.tenant
+        sign_in :user, resource
+        redirect_to admin_profile_path resource
       end
 
   end  # class

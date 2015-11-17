@@ -6,7 +6,7 @@ class HomeController < ApplicationController
     end
 
 
-  def index
+  def index  
     if user_signed_in?
       flash[:notice] = flash[:error] unless flash[:error].blank?
       redirect_to welcome_path 

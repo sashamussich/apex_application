@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     :passwords => "milia/passwords", 
   }
 
-  resources :members do
-    get '/admin_profile' => 'members#admin_profile', on: :member
-  end
+  resources :members
+  get '/admin_profile/:user_id' => 'members#admin_profile', as: :admin_profile
+  
 end
