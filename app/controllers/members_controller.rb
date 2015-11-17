@@ -40,10 +40,8 @@ class MembersController < ApplicationController
     @user = current_user
   end 
 
-  private
-
   def personal_data_params
-    params.require(:member).permit(:cpf, :phone, :address, :included, :id)
+    params.require(:member).permit(:name, :function, :cpf, :phone, :address, :included, :id)
   end
 
   def member_params

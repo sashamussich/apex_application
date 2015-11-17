@@ -37,16 +37,16 @@
   # entered on new sign-ups and invite-members
   def show
     if @confirmable.new_record?  || !::Milia.use_invite_member || @confirmable.skip_confirm_change_password 
-# binding.pry
-      if  @confirmable.member.nil? || @confirmable.member.admin?
-        log_action( "admin sign up" )
-        @confirmable.confirm!
-        sign_up_admin_member @confirmable
-      else
-        log_action( "devise pass-thru" )
-        super  # this will redirect 
-        sign_in_tenanted(resource) if @confirmable.skip_confirm_change_password 
-      end
+      @confirmable.confirm!
+      sign_in_tenanted_and_redirect @confirmable
+      # if  @confirmable.member.nil? || @confirmable.member.admin?
+      #   log_action( "admin sign up" )
+      #   sign_up_admin_member @confirmable
+      # else
+      #   log_action( "devise pass-thru" )
+      #   super  # this will redirect 
+      #   sign_in_tenanted(resource) if @confirmable.skip_confirm_change_password 
+      # end
     else
       log_action( "password set form" )
       prep_do_show()  # prep for the form
