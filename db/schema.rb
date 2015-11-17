@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110132634) do
+ActiveRecord::Schema.define(version: 20151117165930) do
 
   create_table "members", force: :cascade do |t|
     t.integer  "tenant_id"
     t.integer  "user_id"
     t.string   "name"
     t.string   "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "cpf"
-    t.boolean  "admin"
+    t.boolean  "admin",      default: false
     t.boolean  "active"
     t.string   "address"
     t.string   "function"

@@ -1,4 +1,4 @@
-class HomeController < ApplicationController
+class DashboardController < ApplicationController
   skip_before_action :authenticate_tenant!, :only => [ :index ]
 
     def welcome
@@ -11,9 +11,7 @@ class HomeController < ApplicationController
       flash[:notice] = flash[:error] unless flash[:error].blank?
       redirect_to welcome_path 
     else
-      if flash[:notice].blank?
-        flash[:notice] = "sign in if your organization has an account"
-      end
+      flash[:notice] = "sign in if your organization has an account" if flash[:notice].blank?
     end   # if logged in .. else first time
   end
 end

@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_tenant!
   
-     ##    milia defines a default max_tenants, invalid_tenant exception handling
-     ##    but you can override these if you wish to handle directly
+  ##    milia defines a default max_tenants, invalid_tenant exception handling
+  ##    but you can override these if you wish to handle directly
   rescue_from ::Milia::Control::MaxTenantExceeded, :with => :max_tenants
   rescue_from ::Milia::Control::InvalidTenantAccess, :with => :invalid_tenant
   before_action  :prep_org_name
@@ -14,16 +14,13 @@ class ApplicationController < ActionController::Base
 
   # optional callback for post-authenticate_tenant! processing
   def callback_authenticate_tenant
-    @org_name = ( Tenant.current_tenant.nil?  ?
-      "Simple Solutions- APICE"   :
-      Tenant.current_tenant.name 
-    )
+    @org_name = Tenant.current_tenant.nil? ? "Simple Solutions- APICE" : Tenant.current_tenant.name
     # set_environment or whatever else you need for each valid session
   end
 
   #   org_name will be passed to layout & view
   #   this sets the default name for all situations
-  def prep_org_name()
+  def prep_org_name
     @org_name ||= "Simple Solutions- APICE"
   end
 

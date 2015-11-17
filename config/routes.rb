@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  get "home/welcome", :as => :welcome
-  get 'home/index'
+  get "dashboard/welcome", :as => :welcome
+  get 'dashboard/index'
 
-  root :to => "home#index"
+  root :to => "dashboard#index"
 
     
   # *MUST* come *BEFORE* devise's definitions (below)
@@ -18,6 +18,4 @@ Rails.application.routes.draw do
   }
 
   resources :members
-  get '/admin_profile/:user_id' => 'members#admin_profile', as: :admin_profile
-  
 end

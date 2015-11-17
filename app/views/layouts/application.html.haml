@@ -15,15 +15,23 @@
           %ul.wat-cf
             %li
               - if user_signed_in? 
-                = link_to( t("web-app-theme.invite", :default => "Create new invstigator"), new_member_path ) if current_user.member.admin?
+                %ul
+                  %li
+                    Logged in as #{current_user.member.name} 
+                  %li
+                    = link_to( t("web-app-theme.invite", :default => "Create new invstigator"), new_member_path ) if current_user.member.admin?
+                  %li
+                    = link_to( t("web-app-theme.logout", :default => "Update profile"), edit_member_path(current_user.id))
+                  %li
+                    = link_to( t("web-app-theme.logout", :default => "Sign out"), destroy_user_session_path, :method => :delete )
               - else
-                = link_to( t("web-app-theme.signup", :default => "Sign up"), new_user_registration_path )
-            %li
-              - if user_signed_in?
-                = link_to( t("web-app-theme.logout", :default => "Sign out"), destroy_user_session_path, :method => :delete )
-                = link_to( t("web-app-theme.logout", :default => "Update profile"), edit_member_path(current_user.id))
-              - else
-                = link_to( t("web-app-theme.login", :default => "Sign in"), new_user_session_path )
+                %ul
+                  %li
+                    = link_to( t("web-app-theme.login", :default => "Sign in"), new_user_session_path )
+                  %li
+                    = link_to( t("web-app-theme.signup", :default => "Sign up"), new_user_registration_path )
+           
+                
         #main-navigation
           %ul.wat-cf
       #wrapper.wat-cf
